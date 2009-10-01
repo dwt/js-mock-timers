@@ -1,44 +1,44 @@
 
-= Mock Timers
+# Mock Timers
 
 JavaScript mock timer library for testing async functionality.
 
-== Example
+## Example
 
-Timers return ids and may be passed to clearInterval(), however
+Timers return ids and may be passed to *clearInterval()*, however
 they do not execute in threads, they must be manually scheduled and
-controlled via the tick() function.
+controlled via the *tick()* function.
 
-  setTimeout(function(){
-    alert('Wahoo!')
-  }, 400)
+    setTimeout(function(){
+      alert('Wahoo!')
+    }, 400)
+    
+    tick(200) // Nothing happens
+    tick(400) // Wahoo!
   
-  tick(200) // Nothing happens
-  tick(400) // Wahoo!
-  
-setInterval() works as expected, although it persists, where as setTimeout() 
-is destroyed after a single call. As conveyed by the last tick() call below,
+*setInterval()* works as expected, although it persists, where as *setTimeout()*
+is destroyed after a single call. As conveyed by the last *tick()* call below,
 a large increment in milliseconds may cause the callbacks to be called several times
 to 'catch up'.
 
-  progress = ''
-  var id = setInterval(function(){
-    progress += '.'
-  }, 100)
+    progress = ''
+    var id = setInterval(function(){
+      progress += '.'
+    }, 100)
+    
+    tick(50),  print(progress) // ''
+    tick(50),  print(progress) // '.'
+    tick(100), print(progress) // '..'
+    tick(100), print(progress) // '...'
+    tick(300), print(progress) // '......'
+    
+    clearInterval(id)
+    
+    tick(800) // Nothing happens
   
-  tick(50),  print(progress) // ''
-  tick(50),  print(progress) // '.'
-  tick(100), print(progress) // '..'
-  tick(100), print(progress) // '...'
-  tick(300), print(progress) // '......'
-  
-  clearInterval(id)
-  
-  tick(800) // Nothing happens
-  
-You may also reset at any time using resetTimers()
+You may also reset at any time using *resetTimers()*
 
-== License 
+## License 
 
 (The MIT License)
 
