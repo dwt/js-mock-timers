@@ -98,4 +98,10 @@ describe 'Timers'
       called.should.eql 9
     end
   end
+
+  describe 'clearTimeout()'
+    it 'should alias clearInterval()'
+      clearTimeout.should.be clearInterval
+    end
+  end
 end
