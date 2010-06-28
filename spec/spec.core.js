@@ -128,7 +128,7 @@ describe 'Timers'
     
     it "removes global tick method if disabled"
       MockTimers.unmockGlobalTimerFunctions()
-      global.tick.should.not.be_null
+      global.tick.should.be_null
     end
     
     it "re-adds global tick-method if re-enabled"
