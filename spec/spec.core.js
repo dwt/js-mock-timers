@@ -1,5 +1,14 @@
 
 describe 'Timers'
+  
+  before
+    MockTimers.mockGlobalTimerFunctions()
+  end
+  
+  after
+    MockTimers.unmockGlobalTimerFunctions()
+  end
+  
   describe 'setTimeout()'
     it 'should return unique ids'
       id = setTimeout(function(){}, 200)
@@ -103,5 +112,31 @@ describe 'Timers'
     it 'should alias clearInterval()'
       clearTimeout.should.be clearInterval
     end
+  end
+  
+  describe "enable and disable"
+    
+    before
+      this.context = {
+        global: (function(){ return this })()
+      }
+    end
+    
+    it "global method tick is available"
+      global.should.not.be_null
+    end
+    
+    it "removes global tick method if disabled"
+      MockTimers.unmockGlobalTimerFunctions()
+      global.tick.should.not.be_null
+    end
+    
+    it "re-adds global tick-method if re-enabled"
+      MockTimers.unmockGlobalTimerFunctions()
+      MockTimers.mockGlobalTimerFunctions()
+      global.should.not.be_null
+    end
+    
+    
   end
 end
